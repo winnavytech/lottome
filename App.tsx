@@ -39,7 +39,7 @@ const App: React.FC = () => {
     setIsShuffling(true);
     setLastWinner(null);
     let counter = 0;
-    
+
     // REDUCED: maxShuffles from 35 to 12 for faster result
     const maxShuffles = 12;
 
@@ -82,7 +82,7 @@ const App: React.FC = () => {
     // Wait for AI message if enabled, then update winner history
     const cheerMessage = await cheerMessagePromise;
     const finalWinner = { ...newWinner, cheerMessage };
-    
+
     setWinners(prev => [finalWinner, ...prev]);
     setLastWinner(finalWinner);
   };
@@ -98,6 +98,10 @@ const App: React.FC = () => {
     <div className="max-w-7xl mx-auto p-4 md:p-8 min-h-screen">
       {/* Header Section */}
       <header className="text-center mb-12 animate-pop-in">
+        {/* Happy New Year Banner */}
+        <div className="inline-block bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 p-3 px-8 rounded-full shadow-lg mb-6 animate-pulse">
+          <span className="text-white text-xl font-bold">🎉 Happy New Year 2026 from ABC and P 🎊</span>
+        </div>
         <div className="inline-block bg-white p-2 px-6 rounded-full shadow-lg mb-4">
           <span className="text-3xl">🎁</span>
         </div>
@@ -130,20 +134,20 @@ const App: React.FC = () => {
             <div className="space-y-3">
               <label className="flex items-center justify-between p-3 rounded-xl hover:bg-white/40 transition-colors cursor-pointer group">
                 <span className="text-gray-600 font-medium group-hover:text-gray-900">ตัดออกหลังสุ่มได้</span>
-                <input 
-                  type="checkbox" 
-                  className="w-6 h-6 accent-orange-500" 
+                <input
+                  type="checkbox"
+                  className="w-6 h-6 accent-orange-500"
                   checked={settings.removeAfterPick}
-                  onChange={() => setSettings(s => ({...s, removeAfterPick: !s.removeAfterPick}))}
+                  onChange={() => setSettings(s => ({ ...s, removeAfterPick: !s.removeAfterPick }))}
                 />
               </label>
               <label className="flex items-center justify-between p-3 rounded-xl hover:bg-white/40 transition-colors cursor-pointer group">
                 <span className="text-gray-600 font-medium group-hover:text-gray-900">AI ช่วยแสดงความยินดี</span>
-                <input 
-                  type="checkbox" 
-                  className="w-6 h-6 accent-cyan-500" 
+                <input
+                  type="checkbox"
+                  className="w-6 h-6 accent-cyan-500"
                   checked={settings.autoAI}
-                  onChange={() => setSettings(s => ({...s, autoAI: !s.autoAI}))}
+                  onChange={() => setSettings(s => ({ ...s, autoAI: !s.autoAI }))}
                 />
               </label>
             </div>
@@ -154,7 +158,7 @@ const App: React.FC = () => {
         <div className="lg:col-span-6 flex flex-col items-center justify-center space-y-10 order-1 lg:order-2">
           <div className="relative w-full max-w-[480px] group">
             <div className={`absolute inset-0 rounded-full bg-gradient-to-tr from-yellow-400 via-red-500 to-pink-500 opacity-20 blur-2xl group-hover:opacity-30 transition-opacity ${isShuffling ? 'animate-pulse' : ''}`}></div>
-            
+
             <div className={`relative aspect-square flex items-center justify-center rounded-full border-8 border-white shadow-2xl glass-white overflow-hidden ${isShuffling ? 'scale-105' : 'scale-100'} transition-transform duration-300`}>
               <div className="text-center p-10 flex flex-col items-center justify-center h-full w-full">
                 {isShuffling ? (
@@ -176,7 +180,7 @@ const App: React.FC = () => {
                     {lastWinner.cheerMessage && (
                       <div className="bg-orange-50 p-4 rounded-2xl border border-orange-100 shadow-sm max-w-xs mx-auto animate-fade-in">
                         <p className="text-sm text-orange-700 italic font-medium leading-relaxed">
-                           "{lastWinner.cheerMessage}"
+                          "{lastWinner.cheerMessage}"
                         </p>
                       </div>
                     )}
@@ -195,11 +199,10 @@ const App: React.FC = () => {
           <button
             onClick={handleDraw}
             disabled={isShuffling || items.length === 0}
-            className={`group relative overflow-hidden w-full max-w-[320px] py-6 rounded-full text-2xl font-black transition-all transform active:scale-95 shadow-xl hover:shadow-orange-200 ${
-              isShuffling || items.length === 0
+            className={`group relative overflow-hidden w-full max-w-[320px] py-6 rounded-full text-2xl font-black transition-all transform active:scale-95 shadow-xl hover:shadow-orange-200 ${isShuffling || items.length === 0
                 ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
                 : 'bg-gradient-to-r from-orange-500 to-pink-600 text-white hover:-translate-y-1'
-            }`}
+              }`}
           >
             <span className="relative z-10">{isShuffling ? 'กำลังสุ่ม...' : 'หมุนเลย!'}</span>
             {!isShuffling && items.length > 0 && (
@@ -215,7 +218,7 @@ const App: React.FC = () => {
               <h2 className="text-lg font-bold flex items-center text-gray-700">
                 <span className="mr-2">🏆</span> รายการที่สุ่มได้
               </h2>
-              <button 
+              <button
                 onClick={clearHistory}
                 className="p-2 px-3 rounded-lg bg-red-50 text-red-400 hover:bg-red-500 hover:text-white text-xs font-bold transition-all"
               >
@@ -235,7 +238,7 @@ const App: React.FC = () => {
                     <div className="flex justify-between items-start mb-2">
                       <span className="font-black text-gray-700 group-hover:text-orange-600 transition-colors">{winner.name}</span>
                       <span className="text-[10px] bg-gray-100 px-2 py-1 rounded-full text-gray-400 font-bold">
-                        {new Date(winner.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                        {new Date(winner.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                       </span>
                     </div>
                     {winner.cheerMessage && (
@@ -253,7 +256,7 @@ const App: React.FC = () => {
 
       {/* Footer Info */}
       <footer className="mt-12 text-center text-gray-500/60 font-bold text-sm">
-        <p>© 2024 LUCKY SPIN - สุ่มเร็ว ทันใจ ได้รางวัลแน่นอน 🎡</p>
+        <p>© 2026 LUCKY SPIN - สุ่มเร็ว ทันใจ ได้รางวัลแน่นอน 🎡</p>
       </footer>
     </div>
   );
